@@ -10,7 +10,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     <div className="min-h-screen">
       {/* Video section */}
       <div className="relative w-full h-screen">
-        {/* Video hoặc hero content */}
         {children}
       
 

@@ -1,31 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
+import RegisterDialog from '../register_dialog';
 
 interface VideoPlayerProps {
   youtubeId: string;
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ youtubeId }) => {
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+
   return (
     <div className="relative w-full h-screen overflow-hidden">
       {/* Video background */}
-      <iframe
-        width="100%"
-        height="100%"
-        src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&controls=0&rel=0&modestbranding=1&mute=1&playsinline=1&disablekb=1&loop=1&playlist=${youtubeId}`}
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        className="absolute top-0 left-0 w-full h-full object-cover filter brightness-50"
-        frameBorder="0"
-      ></iframe>  
+      <div className="absolute top-0 left-0 w-full h-full">
+        <iframe
+          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&controls=0&rel=0&modestbranding=1&mute=1&playsinline=1&disablekb=1&loop=1&playlist=${youtubeId}`}
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          frameBorder="0"
+          className="w-full h-full object-cover filter brightness-50"
+        ></iframe>
+      </div>
 
-            {/* Overlay radial gradient */}
-<div className="absolute top-0 left-0 w-full h-full pointer-events-none"
-     style={{
-       background: "radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(0,0,0,1) 100%)"
-     }}
-></div>
-
+      {/* Overlay radial gradient */}
+      <div
+        className="absolute top-0 left-0 w-full h-full pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(0,0,0,1) 100%)"
+        }}
+      ></div>
 
       {/* Nội dung chồng lên video */}
       <div className="relative z-10 flex flex-col md:flex-row items-center justify-center h-full text-white text-center md:text-left px-4 md:px-20 gap-8">
@@ -51,15 +54,24 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ youtubeId }) => {
           <p className="leading-relaxed">
             Hãy cùng Alba chung tay, không chỉ để thay đổi cuộc sống của những người cần giúp đỡ, mà còn để làm giàu thêm tâm hồn của chính mình. Mỗi hành động tử tế đều có giá trị, và chúng ta có thể tạo nên một thế giới tốt đẹp hơn.
           </p>
-          
         </div>
-        
       </div>
+
       {/* Button ở góc dưới */}
-      <button className="absolute bottom-12 right-8 bg-white text-black px-6 py-3 rounded-lg transition-colors duration-300 font-extrabold">
+      <button 
+        className="absolute bottom-12 right-8 bg-white text-black px-6 py-3 rounded-lg transition-colors duration-300 font-extrabold hover:bg-gray-200 z-20"
+        onClick={() => setIsRegisterOpen(true)}
+      >
         Tham gia ngay
       </button>
-      
+
+      {/* Render RegisterDialog khi isRegisterOpen là true */}
+      {isRegisterOpen && (
+        <RegisterDialog 
+          isOpen={isRegisterOpen} 
+          onClose={() => setIsRegisterOpen(false)} 
+        />
+      )}
     </div>
   );
 };
