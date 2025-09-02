@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import Logo from '../../../assets/Logo.jpg';
 import {
   HomeIcon,
@@ -13,6 +14,15 @@ import {
 } from "@heroicons/react/24/solid";
 
 const UserLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const location = useLocation();
+  const isHome = location.pathname === "/user/home";
+  const isMessenger = location.pathname === "/user/home/mess";
+
+  // Added state for panels
+  const [showSearchPanel, setShowSearchPanel] = useState(false);
+  const [showNotificationPanel, setShowNotificationPanel] = useState(false);
+  const [showCreatePanel, setShowCreatePanel] = useState(false);
+  
   return (
     <div className="min-h-screen bg-black text-white flex">
       {/* Sidebar bên trái */}
@@ -23,37 +33,73 @@ const UserLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           
           <nav className="space-y-4">
             <div className="flex items-center space-x-3 hover:bg-gray-900 p-2 rounded cursor-pointer">
-              <HomeIcon className="h-6 w-6" />
+              <HomeIcon className={`h-6 w-6 ${isHome ? "text-blue-500" : ""}`} />
               <span className="font-semibold">Home</span>
             </div>
-            <div className="flex items-center space-x-3 hover:bg-gray-900 p-2 rounded cursor-pointer">
-              <MagnifyingGlassIcon className="h-6 w-6" />
-              <span className="font-semibold">Search</span>
+            {/* Search button with panel */}
+            <div className="relative">
+              <div
+                onClick={() => setShowSearchPanel(prev => !prev)}
+                className="flex items-center space-x-3 hover:bg-gray-900 p-2 rounded cursor-pointer"
+              >
+                <MagnifyingGlassIcon className="h-6 w-6" />
+                <span className="font-semibold">Search</span>
+              </div>
+              {showSearchPanel && (
+                <div className="absolute left-full top-0 ml-2 bg-white text-black p-2 rounded shadow-md">
+                  {/* Nội dung bảng tìm kiếm */}
+                  Search Panel
+                </div>
+              )}
             </div>
-            <div className="flex items-center space-x-3 hover:bg-gray-900 p-2 rounded cursor-pointer">
+            <Link to="/user/home/explore" className="flex items-center space-x-3 hover:bg-gray-900 p-2 rounded cursor-pointer">
               <Squares2X2Icon className="h-6 w-6" />
               <span className="font-semibold">Explore</span>
-            </div>
-            <div className="flex items-center space-x-3 hover:bg-gray-900 p-2 rounded cursor-pointer">
+            </Link>
+            <Link to="/user/home/reels" className="flex items-center space-x-3 hover:bg-gray-900 p-2 rounded cursor-pointer">
               <PlayCircleIcon className="h-6 w-6" />
               <span className="font-semibold">Reels</span>
-            </div>
-            <div className="flex items-center space-x-3 hover:bg-gray-900 p-2 rounded cursor-pointer">
-              <ChatBubbleLeftRightIcon className="h-6 w-6" />
+            </Link>
+            <Link to="/user/home/mess" className="flex items-center space-x-3 hover:bg-gray-900 p-2 rounded cursor-pointer">
+              <ChatBubbleLeftRightIcon className={`h-6 w-6 ${isMessenger ? "text-blue-500" : ""}`} />
               <span className="font-semibold">Messages</span>
+            </Link>
+            {/* Notifications button with panel */}
+            <div className="relative">
+              <div
+                onClick={() => setShowNotificationPanel(prev => !prev)}
+                className="flex items-center space-x-3 hover:bg-gray-900 p-2 rounded cursor-pointer"
+              >
+                <HeartIcon className="h-6 w-6" />
+                <span className="font-semibold">Notifications</span>
+              </div>
+              {showNotificationPanel && (
+                <div className="absolute left-full top-0 ml-2 bg-white text-black p-2 rounded shadow-md">
+                  {/* Nội dung bảng thông báo */}
+                  Notification Panel
+                </div>
+              )}
             </div>
-            <div className="flex items-center space-x-3 hover:bg-gray-900 p-2 rounded cursor-pointer">
-              <HeartIcon className="h-6 w-6" />
-              <span className="font-semibold">Notifications</span>
+            {/* Create button with panel */}
+            <div className="relative">
+              <div
+                onClick={() => setShowCreatePanel(prev => !prev)}
+                className="flex items-center space-x-3 hover:bg-gray-900 p-2 rounded cursor-pointer"
+              >
+                <PlusCircleIcon className="h-6 w-6" />
+                <span className="font-semibold">Create</span>
+              </div>
+              {showCreatePanel && (
+                <div className="absolute left-full top-0 ml-2 bg-white text-black p-2 rounded shadow-md">
+                  {/* Nội dung bảng tạo */}
+                  Create Panel
+                </div>
+              )}
             </div>
-            <div className="flex items-center space-x-3 hover:bg-gray-900 p-2 rounded cursor-pointer">
-              <PlusCircleIcon className="h-6 w-6" />
-              <span className="font-semibold">Create</span>
-            </div>
-            <div className="flex items-center space-x-3 hover:bg-gray-900 p-2 rounded cursor-pointer">
+            <Link to="/user/home/profile" className="flex items-center space-x-3 hover:bg-gray-900 p-2 rounded cursor-pointer">
               <UserIcon className="h-6 w-6" />
               <span className="font-semibold">Profile</span>
-            </div>
+            </Link>
           </nav>
         </div>
 
