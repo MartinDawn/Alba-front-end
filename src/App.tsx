@@ -1,17 +1,24 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import IntroductionPage from './modules/home';
-import UserPage from './modules/user/user';
+
+import Home from './modules/auth/home';
+import PolicyPage from './modules/auth/policy';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
+import UserHome from "./modules/user/home";
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
-        <Route path="/" element={<IntroductionPage />} />
-        <Route path="/user" element={<UserPage />} />
+        {/* auth */}
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/policy" element={<PolicyPage />} />
+        {/* user */}
+        <Route path="/user/home" element={<UserHome />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
+
   );
 }
 
