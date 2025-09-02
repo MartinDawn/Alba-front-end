@@ -1,7 +1,9 @@
 import React from 'react';
+
 import Home from './modules/auth/home';
 import PolicyPage from './modules/auth/policy';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 
 import UserHome from "./modules/user/home";
 function App() {
@@ -16,6 +18,7 @@ function App() {
         <Route path="/user/home" element={<UserHome />} />
       </Routes>
     </Router>
+
   );
 }
 
